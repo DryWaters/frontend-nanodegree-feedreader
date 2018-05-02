@@ -139,7 +139,18 @@ $(function () {
         // lexical scope so that the expect can run after changing the 
         // page with an additional ajax call.  It verifies that the HTML
         // content has changed after the additional call.
-        it('ensure loadFeed changes the content', function (done) {
+        it('ensure loadFeed changes the content for id 1', function (done) {
+            var feedContent = $('.feed')[0].innerHTML;
+            expect(feedContent).toBeDefined();
+            expect(feedContent.length).toBeGreaterThan(0);
+            var checkFeed = function(done, feedContent) {
+                expect($('.feed')[0].innerHTML).not.toBe(feedContent);
+                done();
+            };
+            loadFeed(1, checkFeed.bind(this, done, feedContent));
+        });
+
+        it('ensure loadFeed changes the content for id 2', function (done) {
             var feedContent = $('.feed')[0].innerHTML;
             expect(feedContent).toBeDefined();
             expect(feedContent.length).toBeGreaterThan(0);
@@ -149,5 +160,18 @@ $(function () {
             };
             loadFeed(2, checkFeed.bind(this, done, feedContent));
         });
+
+        
+        it('ensure loadFeed changes the content for id 3', function (done) {
+            var feedContent = $('.feed')[0].innerHTML;
+            expect(feedContent).toBeDefined();
+            expect(feedContent.length).toBeGreaterThan(0);
+            var checkFeed = function(done, feedContent) {
+                expect($('.feed')[0].innerHTML).not.toBe(feedContent);
+                done();
+            };
+            loadFeed(3, checkFeed.bind(this, done, feedContent));
+        });
+
     });
 }());
