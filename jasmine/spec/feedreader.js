@@ -62,6 +62,11 @@ $(function () {
          * hiding/showing of the menu element.
          */
         it('ensure menu is hidden at the start', function () {
+            expect(body).toBeDefined();
+            expect(menu).toBeDefined();
+            expect(body.length).toBeGreaterThan(0);
+            expect(menu.length).toBeGreaterThan(0);
+
             expect(body[0].className).toBe('menu-hidden');
         });
 
@@ -71,6 +76,11 @@ $(function () {
           * clicked and does it hide when clicked again.
           */
         it('ensure menu class changes on click', function () {
+            expect(body).toBeDefined();
+            expect(menu).toBeDefined();
+            expect(body.length).toBeGreaterThan(0);
+            expect(menu.length).toBeGreaterThan(0);
+            
             menu.trigger('click');
             expect(body[0].className).toBe('');
             menu.trigger('click');
@@ -95,8 +105,13 @@ $(function () {
          * the use of Jasmine's beforeEach and asynchronous done() function.
          */
         it('ensure .feed contains at least one element', function() {
-            expect($('.feed').children().length).not.toBe(0);
-            expect($('.feed .entry').length).not.toBe(0);
+            var feed = $('.feed');
+            var entries = $('.feed .entry-link');
+            expect(feed).toBeDefined();
+            expect(entries).toBeDefined();
+
+            expect(feed.length).toBeGreaterThan(0);
+            expect(entries.length).toBeGreaterThan(0);
         });
     });
 
@@ -126,6 +141,8 @@ $(function () {
         // content has changed after the additional call.
         it('ensure loadFeed changes the content', function (done) {
             var feedContent = $('.feed')[0].innerHTML;
+            expect(feedContent).toBeDefined();
+            expect(feedContent.length).toBeGreaterThan(0);
             var checkFeed = function(done, feedContent) {
                 expect($('.feed')[0].innerHTML).not.toBe(feedContent);
                 done();
