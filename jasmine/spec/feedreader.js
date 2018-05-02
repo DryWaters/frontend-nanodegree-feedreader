@@ -31,28 +31,55 @@ $(function() {
          * in the allFeeds object and ensures it has a URL defined
          * and that the URL is not empty.
          */
-
+        it('all contain non-empty URL', function() {
+            allFeeds.forEach(function(feed) {
+                expect(feed.url).toBeDefined();
+                expect(feed.url.length).not.toBe(0);
+            });
+        });
 
         /* TODO: Write a test that loops through each feed
          * in the allFeeds object and ensures it has a name defined
          * and that the name is not empty.
          */
+        it('all contain non-empty name', function() {
+            allFeeds.forEach(function(feed) {
+                expect(feed.name).toBeDefined();
+                expect(feed.name).not.toBe('');
+            });
+        });
     });
 
 
     /* TODO: Write a new test suite named "The menu" */
+    describe('The menu', function() {
+        var body = document.getElementsByTagName('body')[0];
 
-        /* TODO: Write a test that ensures the menu element is
+         /* TODO: Write a test that ensures the menu element is
          * hidden by default. You'll have to analyze the HTML and
          * the CSS to determine how we're performing the
          * hiding/showing of the menu element.
          */
+        it('ensure menu is hidden at the start', function() {
+            expect(body.className).toBe('menu-hidden');
+        });
 
-         /* TODO: Write a test that ensures the menu changes
+        /* TODO: Write a test that ensures the menu changes
           * visibility when the menu icon is clicked. This test
           * should have two expectations: does the menu display when
           * clicked and does it hide when clicked again.
           */
+         it('ensure menu class changes on click', function() {
+            body.trigger('click');
+            waitsFor(function() {
+                expect(body.className).toBe('');
+            })
+         });
+    })
+
+
+
+ 
 
     /* TODO: Write a new test suite named "Initial Entries" */
 
