@@ -75,7 +75,7 @@ function init() {
                },
        error: function (result, status, err){
                  //run only the callback without attempting to parse result due to error
-                 if (cb) {
+                 if (cb) {        
                      cb();
                  }
                },

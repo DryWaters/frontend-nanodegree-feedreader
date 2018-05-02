@@ -81,42 +81,48 @@ $(function() {
     /* TODO: Write a new test suite named "Initial Entries" */
     describe('Initial Entries', function() {
 
-        beforeEach(function(done) {
-            loadFeed(0, done);
-        });
+        // beforeEach(function(done) {
+        //     loadFeed(0, done);
+        // });
 
-        /* TODO: Write a test that ensures when the loadFeed
-         * function is called and completes its work, there is at least
-         * a single .entry element within the .feed container.
-         * Remember, loadFeed() is asynchronous so this test will require
-         * the use of Jasmine's beforeEach and asynchronous done() function.
-         */
-        it('ensure .feed contains at least one element', function(done) {
-            expect($('.feed').children().length).not.toBe(0);
-            expect($('.feed .entry').length).not.toBe(0);
-            done();
-        });
+        // /* TODO: Write a test that ensures when the loadFeed
+        //  * function is called and completes its work, there is at least
+        //  * a single .entry element within the .feed container.
+        //  * Remember, loadFeed() is asynchronous so this test will require
+        //  * the use of Jasmine's beforeEach and asynchronous done() function.
+        //  */
+        // it('ensure .feed contains at least one element', function() {
+        //     expect($('.feed').children().length).not.toBe(0);
+        //     expect($('.feed .entry').length).not.toBe(0);
+        // });
     });
 
     /* TODO: Write a new test suite named "New Feed Selection" */
     describe('New Feed Selection', function() {
+
+        beforeEach(function(done) {
+            loadFeed(0, done);
+            console.log("before each done");
+        });
 
         /* TODO: Write a test that ensures when a new feed is loaded
          * by the loadFeed function that the content actually changes.
          * Remember, loadFeed() is asynchronous.
          */
         it('ensure loadFeed changes the content', function(done) {
-            var feedContent = $('.feed').html;
-            var feedListSize = $('.feed-list li').length;
-            
-            for (var i = 0; i < feedListSize; i++) {
-                loadFeed(i, done);
-                expect($('.feed').html).not.toBe(feedContent);
-                feedContent = $('.feed').html;
-            }
-            
-            done();
-        });
+            // // console.log("starting test");
+            // var feedContent = $('.feed')[0].innerHTML;
+            // // console.log($('.feed .entry')[0].innerHTML);
+            // console.log("starting test");
 
+            // loadFeed(2);
+            // setTimeout(function() {
+            //     console.log('calling done');
+            //     done()}, 5000);
+            // console.log("load feed done");
+
+            // expect($('.feed')[0].innerHTML).not.toBe(feedContent);
+            // // console.log($('.feed .entry')[0].innerHTML);
+        });
     });
 }());
