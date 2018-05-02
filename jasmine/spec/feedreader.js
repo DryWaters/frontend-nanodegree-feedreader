@@ -67,7 +67,7 @@ $(function () {
             expect(body.length).toBeGreaterThan(0);
             expect(menu.length).toBeGreaterThan(0);
 
-            expect(body[0].className).toBe('menu-hidden');
+            expect(body.hasClass('menu-hidden')).toBe(true);
         });
 
         /*  Test that ensures the menu changes
@@ -80,13 +80,13 @@ $(function () {
             expect(menu).toBeDefined();
             expect(body.length).toBeGreaterThan(0);
             expect(menu.length).toBeGreaterThan(0);
-            
+
             menu.trigger('click');
-            expect(body[0].className).toBe('');
+            expect(body.hasClass('menu-hidden')).toBe(false);
             menu.trigger('click');
-            expect(body[0].className).toBe('menu-hidden');
+            expect(body.hasClass('menu-hidden')).toBe(true);
         });
-    })
+    });
 
     /* Test suite named "Initial Entries" */
     describe('Initial Entries', function () {
@@ -94,7 +94,7 @@ $(function () {
         // Pass in the done function to load feed
         // so that it will be called after the 
         // ajax request completes
-        beforeEach(function(done) {
+        beforeEach(function (done) {
             loadFeed(0, done);
         });
 
@@ -104,74 +104,43 @@ $(function () {
          * Remember, loadFeed() is asynchronous so this test will require
          * the use of Jasmine's beforeEach and asynchronous done() function.
          */
-        it('ensure .feed contains at least one element', function() {
+        it('ensure .feed contains at least one element and not empty', function () {
             var feed = $('.feed');
-            var entries = $('.feed .entry-link');
+            var entries = $('.feed .entry-link .entry');
             expect(feed).toBeDefined();
             expect(entries).toBeDefined();
-
             expect(feed.length).toBeGreaterThan(0);
             expect(entries.length).toBeGreaterThan(0);
+
+            $.each(entries, function (index, entry) {
+                expect(entry.innerHTML.length).toBeGreaterThan(0);
+            });
         });
     });
 
     /* Test suite named "New Feed Selection" */
     describe('New Feed Selection', function () {
 
-        // Pass in the done function to load feed
-        // so that it will be called after the 
-        // ajax request completes
-        beforeEach(function (done) {
-            loadFeed(0, done);
-        });
-
-        // Resets the initial page to 0
-        // after the tests run
-        afterAll(function (done) {
-            loadFeed(0, done);
-        });
-
         /* Test that ensures when a new feed is loaded
          * by the loadFeed function that the content actually changes.
          * Remember, loadFeed() is asynchronous.
          */
-        // Uses a callback that will run in this function's 
-        // lexical scope so that the expect can run after changing the 
-        // page with an additional ajax call.  It verifies that the HTML
+        // Uses a beforeEach() to setup Async calls to get data
+        // into the prev and new url that will contain the HTML returned
+        // by these calls.  It verifies that the HTML
         // content has changed after the additional call.
-        it('ensure loadFeed changes the content for id 1', function (done) {
-            var feedContent = $('.feed')[0].innerHTML;
-            expect(feedContent).toBeDefined();
-            expect(feedContent.length).toBeGreaterThan(0);
-            var checkFeed = function(done, feedContent) {
-                expect($('.feed')[0].innerHTML).not.toBe(feedContent);
-                done();
-            };
-            loadFeed(1, checkFeed.bind(this, done, feedContent));
+        // Start with feed ID of 1 and then set the new URL to the feed of
+        // ID of 0 so that we do not have to reset the feed after
+        // the tests
+        it('ensure loadFeed changes the content', function (done) {
+            loadFeed(1, function () {
+                var prevUrl = $('.feed')[0].innerHTML;
+                loadFeed(0, function () {
+                    var newUrl = $('.feed')[0].innerHTML;
+                    expect(newUrl).not.toBe(prevUrl);
+                    done();
+                });
+            });
         });
-
-        it('ensure loadFeed changes the content for id 2', function (done) {
-            var feedContent = $('.feed')[0].innerHTML;
-            expect(feedContent).toBeDefined();
-            expect(feedContent.length).toBeGreaterThan(0);
-            var checkFeed = function(done, feedContent) {
-                expect($('.feed')[0].innerHTML).not.toBe(feedContent);
-                done();
-            };
-            loadFeed(2, checkFeed.bind(this, done, feedContent));
-        });
-
-        
-        it('ensure loadFeed changes the content for id 3', function (done) {
-            var feedContent = $('.feed')[0].innerHTML;
-            expect(feedContent).toBeDefined();
-            expect(feedContent.length).toBeGreaterThan(0);
-            var checkFeed = function(done, feedContent) {
-                expect($('.feed')[0].innerHTML).not.toBe(feedContent);
-                done();
-            };
-            loadFeed(3, checkFeed.bind(this, done, feedContent));
-        });
-
     });
 }());
